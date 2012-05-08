@@ -33,11 +33,8 @@ else
     echo
 fi
 
-# This assumes llvm build directory is $gitrootdirectory/../build
 echo Compiling llvm...
-cd $gitrootdirectory
-cd ..
-cd build
+cd $gitrootdirectory/$repo/build
 if make; then
     echo
     echo "Compilation succesfull."

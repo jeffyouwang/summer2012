@@ -1,4 +1,13 @@
-42
-24
-28
-23
+Tree structure:
+
+llvm
+     LLVM source code
+build
+     LLVM build directory.
+     Not tracked by git.
+private
+     Your private directory.
+     Not tracked by git.
+gitsetup
+     Git setup instructions and script.
+
