@@ -50,6 +50,11 @@ Parser::Parser(Preprocessor &pp, Sema &actions, bool SkipFunctionBodies)
   GCCVisibilityHandler.reset(new PragmaGCCVisibilityHandler(actions));
   PP.AddPragmaHandler("GCC", GCCVisibilityHandler.get());
 
+  // TSA - BEGIN
+  HicudaHandler.reset(new PragmaHicudaHandler(actions));
+  PP.AddPragmaHandler(HicudaHandler.get());
+  // TSA - END
+
   OptionsHandler.reset(new PragmaOptionsHandler(actions));
   PP.AddPragmaHandler(OptionsHandler.get());
 

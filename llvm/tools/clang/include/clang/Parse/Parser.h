@@ -160,6 +160,9 @@ class Parser : public CodeCompletionHandler {
 
   OwningPtr<PragmaHandler> AlignHandler;
   OwningPtr<PragmaHandler> GCCVisibilityHandler;
+  // TSA - BEGIN
+  OwningPtr<PragmaHandler> HicudaHandler;
+  // TSA - END
   OwningPtr<PragmaHandler> OptionsHandler;
   OwningPtr<PragmaHandler> PackHandler;
   OwningPtr<PragmaHandler> MSStructHandler;

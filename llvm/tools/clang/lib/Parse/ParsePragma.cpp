@@ -17,6 +17,11 @@
 #include "clang/Lex/Preprocessor.h"
 using namespace clang;
 
+// TSA - BEGIN
+#include <iostream>
+using namespace std;
+// TSA - END
+
 /// \brief Handle the annotation token produced for #pragma unused(...)
 ///
 /// Each annot_pragma_unused is followed by the argument token so e.g.
@@ -333,6 +338,57 @@ void PragmaAlignHandler::HandlePragma(Preprocessor &PP,
                                       Token &AlignTok) {
   ParseAlignPragma(Actions, PP, AlignTok, /*IsOptions=*/false);
 }
+
+
+// TSA - BEGIN
+void PragmaHicudaHandler::HandlePragma(Preprocessor &PP, 
+                                        PragmaIntroducerKind Introducer,
+                                        Token &HicudaTok) {
+  Token Tok;
+  PP.Lex(Tok);
+
+  if (Tok.is(tok::identifier)) {
+    // kernel
+    if (Tok.getIdentifierInfo()->isStr("kernel")) {
+       std::cout << "Found a kernel hicuda directive\n";
+       
+      // Get kernel name
+      PP.Lex(Tok);
+      if (!Tok.is(tok::identifier)) {
+         std::cout << "Missing or invalid kernel name -- skipping\n";
+         return;
+      }
+     
+      IdentifierInfo *Name = Tok.getIdentifierInfo();
+      std::cout << "Found kernal name: " << Name->getName().data() << endl;
+
+      PP.Lex(Tok);
+      if (!Tok.is(tok::identifier) || !Tok.getIdentifierInfo()->isStr("tblock")) {
+         std::cout << "Expecting tblock keyword -- skipping\n";
+         return;
+      }
+
+      return;
+    }
+  
+    //global
+    if (Tok.getIdentifierInfo()->isStr("global")) {
+       std::cout << "Found a global hicuda directive\n";
+      return;
+    }
+  
+    //loop_partition
+    if (Tok.getIdentifierInfo()->isStr("loop_partition")) {
+       std::cout << "Found a loop_partition hicuda directive\n";
+      return;
+    }
+  }
+
+  // Unkown hicuds directive -- issue error message
+  PP.Diag(Tok.getLocation(), diag::err_pragma_hicuda_unknown_keyword) << "hicuda";
+}
+// TSA - END
+
 
 void PragmaOptionsHandler::HandlePragma(Preprocessor &PP, 
                                         PragmaIntroducerKind Introducer,
