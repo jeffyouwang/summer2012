@@ -5,8 +5,7 @@
 
 3. Install git on your machine. Open a terminal, go to the gitsetup directory
    and execute
-       sudo apt-get install git-core git-gui git-doc rubygem
-       sudo gem install hub
+       sudo apt-get install git-core git-gui git-doc
 
 4. Set up git on your machine.
    1. Go to the gitsetup directory and execute

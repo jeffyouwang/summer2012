@@ -52,8 +52,9 @@ echo
 echo PASSED.
 echo
 
+cd $gitrootdirectory/$repo
 echo Sending request...
-hub pull-request "$MESSAGE" -h $organization:$username
+./gitsetup/hub/bin/hub pull-request "$MESSAGE" -h $organization:$username
 
 echo Done.
 
