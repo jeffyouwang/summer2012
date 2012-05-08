@@ -1,0 +1,11 @@
+#!/bin/sh
+
+EXPECTED_ARGS=0
+
+if [ $# -ne $EXPECTED_ARGS ]
+then
+  echo "Usage: git_rollback_all"
+  return
+fi
+
+git reset --hard

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+EXPECTED_ARGS=1
+
+if [ $# -ne $EXPECTED_ARGS ]
+then
+  echo "Usage: git_save \"MESSAGE\""
+  exit 1
+fi
+
+MESSAGE=$1
+
+git add -A
+git commit -a -m "$MESSAGE"
+git push -f

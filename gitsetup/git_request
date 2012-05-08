@@ -1,0 +1,61 @@
+#!/bin/sh
+
+EXPECTED_ARGS=1
+
+if [ $# -ne $EXPECTED_ARGS ]
+then
+  echo "git_request MESSAGE"
+  exit 1
+fi
+
+MESSAGE=$1
+username=`git config --get user.username`
+organization=`git config --get repository.organization`
+repo=`git config --get repository.name`
+gitrootdirectory=`git config --get repository.root`
+
+DIR="$( cd "$( dirname "$0" )" && pwd )"
+
+echo
+echo Checking if your code is up-to-date...
+git checkout master >.git_tmp1 2>>.git_tmp1
+git log $username..HEAD >>.git_tmp2 2>>.git_tmp2
+git checkout $username >.git_tmp1 2>>.git_tmp1
+if [ -s .git_tmp2 ]
+then
+    echo Code not fresh. Please execute 'git_refresh'.
+    rm -f .git_tmp1 .git_tmp
+    echo
+    exit 1
+else
+    echo Code is fresh.
+    rm -f .git_tmp1 .git_tmp2
+    echo
+fi
+
+echo Compiling llvm...
+cd $gitrootdirectory/$repo/build
+if make; then
+    echo
+    echo "Compilation succesfull."
+    echo
+else
+    echo
+    echo "Compilation failure. Please fix errors."
+    echo
+    exit 1
+fi
+
+echo Executing tests...
+# TBD: INSERT TESTS HERE
+echo
+echo PASSED.
+echo
+
+cd $gitrootdirectory/$repo
+echo Sending request...
+./gitsetup/hub/hub pull-request "$MESSAGE" -h $organization:$username
+
+echo Done.
+
+cd $DIR
