@@ -1,4 +1,7 @@
-Tree structure:
+
+------------------------------------------------------------------------------
+ I. Directory structure
+------------------------------------------------------------------------------
 
 llvm
      LLVM source code
@@ -10,4 +13,22 @@ private
      Not tracked by git.
 gitsetup
      Git setup instructions and script.
+
+
+------------------------------------------------------------------------------
+ II. Building the LLVM compiler
+------------------------------------------------------------------------------
+
+1. Execute the script config-llvm.sh in the project's root directory.
+
+   *** You only need to do this step the first time you build the compiler.
+
+2. Go to the build directory.
+
+   cd build
+
+3. Type "make" to start compilation.
+
+   You may use multiple threads to speedup the compilation process, by
+   appending the -j option.  For instance, "make -j4" launches 4 threads.
 
