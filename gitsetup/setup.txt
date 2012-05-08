@@ -9,14 +9,14 @@
 
 4. Set up git on your machine.
    1. Go to the gitsetup directory and execute
-          source setup1.sh USERNAME "NAME" EMAIL LOCAL_ROOT_DIR
+          ./setup1 USERNAME "NAME" EMAIL LOCAL_ROOT_DIR
       USERNAME is the your github username (byill)
       NAME is your name (e.g. "Bob Yill")
       LOCAL_ROOT_DIR is a full path to the (new) directory where you want the
       code to be placed. This path must not contain any whitespaces!
       (e.g., ~/work/my_stuff/summerProject)
       Example:
-          source setup1.sh jlewis "Jack Lewis" jack.lewis@gmail.com ~/my_stuff/summerProject
+          ./setup1 jlewis "Jack Lewis" jack.lewis@gmail.com ~/my_stuff/summerProject
    2. Leave passphrase empty (less secure, but will save a lot of time)
 
 5. Setup your ssh key on the github website
@@ -27,6 +27,6 @@
 6. Wait to be added to the group (uoft-tsa)
 
 7. Go to the gitsetup directory and execute
-       source setup2.sh
+       ./setup2
 
 8. Add LOCAL_ROOT_DIR/summer2012/gitsetup to your PATH.
