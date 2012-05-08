@@ -39,6 +39,18 @@ public:
                             Token &FirstToken);
 };
 
+// TSA - BEGIN
+class PragmaHicudaHandler : public PragmaHandler {
+  Sema &Actions;
+public:
+  explicit PragmaHicudaHandler(Sema &A) : PragmaHandler("hicuda"),
+                                           Actions(A) {}
+
+  virtual void HandlePragma(Preprocessor &PP, PragmaIntroducerKind Introducer,
+                            Token &FirstToken);
+};
+// TSA - END
+
 class PragmaOptionsHandler : public PragmaHandler {
   Sema &Actions;
 public:
