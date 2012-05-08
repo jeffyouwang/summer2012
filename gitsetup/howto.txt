@@ -1,0 +1,104 @@
+COMMANDS:
+        git_refresh
+        git_save "MESSAGE"
+        git_rollback FILE(s)_OR_DIRECTORY
+        git_rollback_all
+        git_request "MESSAGE"
+
+DESCRIPTION:
+
+git_refresh
+
+        Execute this at the beginning of each coding session to get your files
+        up to date.
+
+git_save "MESSAGE"
+
+        Execute this periodically to save your changes to
+        the server. MESSAGE is a short description of your most recent changes.
+
+git_rollback FILE(s)_or_DIRECTORY
+
+        Execute this to undo changes to the specified files(s) or directory
+        since last 'git_save'.
+
+git_rollback_all
+
+        Execute this to undo ALL changes since last 'git_save'. Careful!
+
+git_request "MESSAGE"
+
+        Execute this when your code feature is done and tested, and you would
+        like to integrate it into the master code version.
+
+DETAILS:
+
+There are two benefits of using git/github for this project. First, it allows
+multiple users to concurrently work on the code, and second, it allows each user
+to track their code changes. This document explain what you should do so we get
+to enjoy these benefits.
+
+1) MULTIPLE USERS WORKING CONCURRENTLY ON THE CODE
+
+While you will be working on the code locally on your computer, the code will
+also be kept on a remote server (github). To allow for having multiple people
+concurrently modifying the code, there are multiple versions of the code: one
+version for each person, plus one special, master version. Your version of the
+code is automatically created after you have done all the steps from setup.txt.
+You will always be working on your version on the code, never directly on the
+master version, and never on the code versions of other people.
+
+The master version is the one that must be working all the time. After you made
+some modifications on your version on the code and you would like to integrate
+them into the master version, you will issue a request. To do so, execute
+'git_request "MESSAGE"', where "MESSAGE" is a short description of your code
+contribution. At that point someone will look at your code, and either require
+that you do certain modifications or will the master version be updated with
+your changes.
+
+Since there are other people, besides you, working on this project, they will
+occasionally modify the master version, by issuing requests. Then, you will want
+to refresh your version, so that you see changes done to the master version. To
+do so, execute 'git_refresh'.
+
+It could happen that someone has modified a file that you are currently working
+on. In this case a conflict will occur, and you will have to resolve it. That
+is, you will have to edit the conflicting file(s), and decide how to incorporate
+your changes with the changes done by other people.
+
+2) KEEPING TRACK OF YOUR CHANGES
+
+To allow you to keep track of code changes for your version, and to allow others
+to see your progress, you should occasionally issue a command 'git_save
+"MESSAGE"', where MESSAGE is a short text describing the changes to the code you
+have done since previously executing 'git_save'. This will upload your changes
+to the server.
+
+For example, lets say you did some modifications to a file foo.c. After
+executing 'git_save "Added new pragma in foo.c"' your changes will propagate on
+to the server and will now be visible to everyone. Note that this will NOT
+change the master version, so it is always safe to do so, even when your code
+does not compile. Frequent execution of 'git_save' will allow you to keep track
+of your changes, since for every save a log entry will be added on to the
+server, describing your changes.
+
+Another nice feature of occasionally executing 'git_save' it that each execution
+of 'git_save' creates a commit point - a point in time to which you can go back
+if you need so.
+
+For example, lets say that you again modified foo.c (after executing
+'git_save'). And now you decided that you are not happy with your changes and
+you want to go back to how this file looked like when you did 'git_save'. Then,
+simply do 'git_rollback foo.c'. To rollback all of the files to the last commit
+state, do 'git_rollback_all'. (If needed files can be restored not only to the
+very last commit point, but also to the previous commit points. We will explain
+this if needed later on.)
+
+GOOD PRACTICES:
+
+git_refresh: at the beginning of a code session
+git_save: one or more times during the code session
+git_rollback/git_rollback_all: if needed
+git_save: at the end of the code session
+git_request: when you have tested your code, and want it to be integrated into
+             the master version

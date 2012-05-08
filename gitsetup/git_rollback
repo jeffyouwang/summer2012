@@ -1,0 +1,13 @@
+#!/bin/sh
+
+EXPECTED_ARGS=1
+
+if [ $# -ne $EXPECTED_ARGS ]
+then
+  echo "Usage: git_rollback FILE(s)_OR_DIRECTORY"
+  exit 1
+fi
+
+FILES=$1
+
+git checkout $FILES

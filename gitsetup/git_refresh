@@ -1,0 +1,42 @@
+#!/bin/sh
+
+EXPECTED_ARGS=0
+
+if [ $# -ne $EXPECTED_ARGS ]
+then
+  echo "Usage: git_refresh"
+  exit 1
+fi
+
+
+BRANCH=`git config --get user.username`
+MESSAGE=$1
+echo Refreshing your files...
+git checkout master >>.git_tmp 2>>.git_tmp
+git pull -f >>.git_tmp 2>>.git_tmp
+git checkout $BRANCH >>.git_tmp 2>>.git_tmp
+git rebase master >>.git_tmp1 2>>.git_tmp1
+cat .git_tmp1 >> .git_tmp
+grep 'Merge conflict' .git_tmp1 > .git_tmp2
+i="0"
+while [ -s .git_tmp2 ]
+do
+    i=$[$i+1]
+    echo Conflicts at commit point $i
+    cat .git_tmp2 >> .git_rebase_conflict_list
+    git add * >> .git_tmp 2>>.git_tmp
+    git rebase --continue > .git_tmp1
+    cat .git_tmp1 >> .git_tmp
+    grep 'Merge conflict' .git_tmp1 > .git_tmp2
+done
+echo Your files have been refreshed.
+if [ -s .git_rebase_conflict_list ]
+then
+    echo Please check the following files and resolve conflicts:
+    cat .git_rebase_conflict_list
+else
+    echo There were no conflicts.
+fi
+git push -f >>.git_tmp 2>>.git_tmp
+rm -f .git_tmp .git_tmp1 .git_tmp2 .git_rebase_conflict_list
+echo Done.
